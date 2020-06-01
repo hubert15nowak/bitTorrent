@@ -1,8 +1,8 @@
-package peer;
+package person;
 
 import java.util.UUID;
 
-class Peer{
+class Peer extends Client{
 
     private String name;
     private UUID uuid;
