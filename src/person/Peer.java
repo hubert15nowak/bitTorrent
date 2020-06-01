@@ -1,11 +1,12 @@
 package person;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 class Peer extends Client{
-
     private String name;
     private UUID uuid;
+    private ArrayList<UUID> uuids = new ArrayList<>();
 
     Peer(String name){
         this.name = name;
@@ -25,6 +26,20 @@ class Peer extends Client{
     }
 
     private void setUuid() {
-        this.uuid = UUID.randomUUID();
+        UUID temp = UUID.randomUUID();
+        boolean valid = true;
+        uuids.add(temp);
+        for(UUID id : uuids){
+            if(id==temp){
+                valid = false;
+                uuids.remove(id);
+            }
+        }
+        if(valid){
+            this.uuid = temp;
+        }
+        else{
+            setUuid();
+        }
     }
 }
