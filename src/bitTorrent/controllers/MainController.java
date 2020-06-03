@@ -1,12 +1,17 @@
 package bitTorrent.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import bitTorrent.dialogs.DialogUtils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ResourceBundle;
 
 public class MainController {
@@ -98,26 +103,32 @@ public class MainController {
         rightText = (Text) root.lookup("#rightText");
         menuBar = (MenuBar) root.lookup("#menuBar");
 
-
         Menu menu1 = new Menu("Wyświetl");
             MenuItem menu12 = new MenuItem("12");
             MenuItem menu11 = new MenuItem("11");
         Menu menu2 = new Menu(bundle.getString("edit"));
-            MenuItem menu21 = new MenuItem("21");
+            Menu menu21 = new Menu("21");
+                MenuItem menu211 = new MenuItem("211");
+                MenuItem menu212 = new MenuItem("212");
+                SeparatorMenuItem separator = new SeparatorMenuItem();
+                MenuItem menu213 = new MenuItem("213");
+                    menu213.setGraphic(getImage("torrent.png", 20,20));
         Menu menu3 = new Menu("Pomoc");
             MenuItem menu31 = new MenuItem("O aplikacji");
 
         menuBar.getMenus().addAll(menu1, menu2, menu3);
-        menu1.getItems().addAll(menu11, menu12);
-        menu2.getItems().addAll(menu21);
-        menu3.getItems().addAll(menu31);
+            menu1.getItems().addAll(menu11, menu12);
+            menu2.getItems().addAll(menu21);
+                menu21.getItems().addAll(menu211, menu212, separator, menu213);
+            menu3.getItems().addAll(menu31);
 
         menu31.setOnAction(v -> {
             DialogUtils.about();
         });
-
     }
 
-
+    private ImageView getImage(String name, int width, int height){
+        return new ImageView(new Image("resources/images/"+name,width,height,false,false));
+    }
 
 }
