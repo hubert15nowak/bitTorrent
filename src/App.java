@@ -9,8 +9,25 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 
 public class App extends Application {
+
+    @FXML
+    private ListView<String> trackersList;
+
+    @FXML
+    private ListView<String> peersList; //ew. ListView<String>, tak samo wyzej
+
+    @FXML
+    private Text leftText;
+
+    @FXML
+    private Text middleText;
+
+    @FXML
+    private Text rightText;
 
     public static void main(String[] args){
         launch(args);
@@ -19,16 +36,17 @@ public class App extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
-        stage.setTitle("BitTracker");
+        stage.setTitle("TrackTorr");
         stage.setScene(new Scene(root, 976, 600));
         stage.getIcons().add(new Image("https://archive-media-0.nyafuu.org/vp/image/1473/12/1473127702488.jpg"));
         stage.show();
 
-        ListView trackersList = (ListView) root.lookup("#trackersList");
+        init(root);
+
         trackersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         trackersList.getItems().addAll("tracker1", "tracker2", "tracker3", "tracker4", "tracker5", "tracker6");
 
-        ListView peersList = (ListView) root.lookup("#peersList");
+
         peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         peersList.getItems().addAll("peer", "peer2", "peer3");
 
@@ -77,23 +95,23 @@ public class App extends Application {
         });
 
 
+        leftText.setText("left");
+        middleText.setText("middle");
+        rightText.setText("right");
+
+
 
 
     }
 
-    @FXML
-    private ListView<?> trackersList;
+    private void init(Parent root){
+        trackersList = (ListView<String>) root.lookup("#trackersList");
+        peersList = (ListView<String>) root.lookup("#peersList");
+        leftText = (Text) root.lookup("#leftText");
+        middleText = (Text) root.lookup("#middleText");
+        rightText = (Text) root.lookup("#rightText");
+    }
 
-    @FXML
-    private ListView<?> peersList;
 
-    @FXML
-    private Text leftText;
-
-    @FXML
-    private Text middleText;
-
-    @FXML
-    private Text rightText;
 
 }
