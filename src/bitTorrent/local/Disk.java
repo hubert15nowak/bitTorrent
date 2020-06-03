@@ -1,4 +1,4 @@
-package client.local;
+package bitTorrent.local;
 
 import java.util.ArrayList;
 

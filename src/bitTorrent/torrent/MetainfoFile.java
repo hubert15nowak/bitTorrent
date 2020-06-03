@@ -1,9 +1,8 @@
-package torrent;
+package bitTorrent.torrent;
 
-import client.local.Directory;
-import client.local.File;
+import bitTorrent.local.Directory;
+import bitTorrent.local.File;
 
-import java.awt.image.AreaAveragingScaleFilter;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Dictionary;

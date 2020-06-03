@@ -1,4 +1,4 @@
-package person;
+package bitTorrent.person;
 
 import java.util.ArrayList;
 import java.util.UUID;
