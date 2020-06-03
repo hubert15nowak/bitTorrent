@@ -1,24 +1,23 @@
-import javafx.application.Application;
+package bitTorrent.controllers;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
+import bitTorrent.dialogs.DialogUtils;
 
-import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+public class MainController {
 
-public class App extends Application {
+    static ResourceBundle bundle = ResourceBundle.getBundle("resources.bundles.messages");
 
     @FXML
     private ListView<String> trackersList;
 
     @FXML
-    private ListView<String> peersList; //ew. ListView<String>, tak samo wyzej
+    private ListView<String> peersList;
 
     @FXML
     private Text leftText;
@@ -29,19 +28,11 @@ public class App extends Application {
     @FXML
     private Text rightText;
 
-    public static void main(String[] args){
-        launch(args);
-    }
+    @FXML
+    private MenuBar menuBar;
 
-    @Override
-    public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("test.fxml"));
-        stage.setTitle("TrackTorr");
-        stage.setScene(new Scene(root, 976, 600));
-        stage.getIcons().add(new Image("https://archive-media-0.nyafuu.org/vp/image/1473/12/1473127702488.jpg"));
-        stage.show();
-
-        init(root);
+    public void startMockup(Parent root){
+        init(root, bundle);
 
         trackersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         trackersList.getItems().addAll("tracker1", "tracker2", "tracker3", "tracker4", "tracker5", "tracker6");
@@ -65,7 +56,7 @@ public class App extends Application {
                     setText(item);
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
-                            System.out.println(item);
+                            leftText.setText(item);
                         }
                     });
                 }
@@ -87,29 +78,44 @@ public class App extends Application {
                     setText(item);
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
-                            System.out.println(item);
+                            leftText.setText(item);
                         }
                     });
                 }
             }
         });
 
-
-        leftText.setText("left");
+        leftText.setText("");
         middleText.setText("middle");
         rightText.setText("right");
-
-
-
-
     }
 
-    private void init(Parent root){
+    private void init(Parent root, ResourceBundle bundle){
         trackersList = (ListView<String>) root.lookup("#trackersList");
         peersList = (ListView<String>) root.lookup("#peersList");
         leftText = (Text) root.lookup("#leftText");
         middleText = (Text) root.lookup("#middleText");
         rightText = (Text) root.lookup("#rightText");
+        menuBar = (MenuBar) root.lookup("#menuBar");
+
+
+        Menu menu1 = new Menu("Wyświetl");
+            MenuItem menu12 = new MenuItem("12");
+            MenuItem menu11 = new MenuItem("11");
+        Menu menu2 = new Menu(bundle.getString("edit"));
+            MenuItem menu21 = new MenuItem("21");
+        Menu menu3 = new Menu("Pomoc");
+            MenuItem menu31 = new MenuItem("O aplikacji");
+
+        menuBar.getMenus().addAll(menu1, menu2, menu3);
+        menu1.getItems().addAll(menu11, menu12);
+        menu2.getItems().addAll(menu21);
+        menu3.getItems().addAll(menu31);
+
+        menu31.setOnAction(v -> {
+            DialogUtils.about();
+        });
+
     }
 
 
