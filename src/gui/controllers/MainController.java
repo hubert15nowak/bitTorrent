@@ -1,4 +1,4 @@
-package bitTorrent.controllers;
+package gui.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
-import bitTorrent.dialogs.DialogUtils;
+import gui.dialogs.DialogUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

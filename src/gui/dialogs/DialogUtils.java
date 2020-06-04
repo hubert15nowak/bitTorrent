@@ -1,4 +1,4 @@
-package bitTorrent.dialogs;
+package gui.dialogs;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
