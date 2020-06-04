@@ -1,4 +1,4 @@
-package bitTorrent.local;
+package bitTorrent.peer.local;
 
 public class File {
     String name;

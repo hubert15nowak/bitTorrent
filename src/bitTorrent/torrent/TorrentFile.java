@@ -1,6 +1,6 @@
 package bitTorrent.torrent;
 
-import bitTorrent.local.File;
+import bitTorrent.peer.local.File;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

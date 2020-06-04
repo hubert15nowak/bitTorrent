@@ -1,7 +1,7 @@
 package bitTorrent.torrent;
 
-import bitTorrent.local.Directory;
-import bitTorrent.local.File;
+import bitTorrent.peer.local.Directory;
+import bitTorrent.peer.local.File;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;

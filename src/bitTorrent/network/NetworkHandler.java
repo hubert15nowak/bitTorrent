@@ -1,4 +1,4 @@
-package network;
+package bitTorrent.network;
 
 public interface NetworkHandler {
 

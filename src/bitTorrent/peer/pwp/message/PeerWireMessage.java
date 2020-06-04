@@ -1,4 +1,4 @@
-package bitTorrent.pwp.message;
+package bitTorrent.peer.pwp.message;
 
 public abstract class PeerWireMessage {
 

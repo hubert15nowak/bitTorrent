@@ -1,4 +1,4 @@
-package network;
+package bitTorrent.network;
 
 public class NetworkClient {
     String addres;

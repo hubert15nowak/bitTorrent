@@ -1,4 +1,4 @@
-package tracker;
+package bitTorrent.tracker;
 
 public class Tracker {
     

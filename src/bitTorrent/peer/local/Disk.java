@@ -1,4 +1,4 @@
-package bitTorrent.local;
+package bitTorrent.peer.local;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package bitTorrent.pwp;
+package bitTorrent.peer.pwp;
 
-import torrent.FileShared;
+import bitTorrent.torrent.FileShared;
 
 
 import java.util.ArrayList;
