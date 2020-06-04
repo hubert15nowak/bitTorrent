@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Directory {
     String name;
+    Directory parentDirectory;
     ArrayList<Directory> directories = new ArrayList<>();
     ArrayList<File> files = new ArrayList<>();
 
