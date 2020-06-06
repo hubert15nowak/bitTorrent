@@ -4,9 +4,24 @@ import java.util.ArrayList;
 
 public class Directory {
     String name;
-    Directory parentDirectory;
     ArrayList<Directory> directories = new ArrayList<>();
-    ArrayList<File> files = new ArrayList<>();
+    ArrayList<MyFile> files = new ArrayList<>();
+
+    public Directory(String name) {
+        this.name = name;
+    }
+
+    public Directory() {
+        this.name = Names.getRandomName();
+    }
+
+    public boolean add(Directory directory) {
+        return directories.add(directory);
+    }
+
+    public boolean add(MyFile myFile) {
+        return files.add(myFile);
+    }
 
     public String getName() {
         return name;
@@ -24,11 +39,11 @@ public class Directory {
         this.directories = directories;
     }
 
-    public ArrayList<File> getFiles() {
+    public ArrayList<MyFile> getFiles() {
         return files;
     }
 
-    public void setFiles(ArrayList<File> files) {
+    public void setFiles(ArrayList<MyFile> files) {
         this.files = files;
     }
 }
