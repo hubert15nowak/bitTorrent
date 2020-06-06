@@ -1,8 +1,8 @@
 package bitTorrent.torrent;
 
-import bitTorrent.peer.local.File;
+import bitTorrent.peer.local.MyFile;
 
 public class FileShared {
-    File file;
+    MyFile file;
     MetainfoFile metainfoFile;
 }
