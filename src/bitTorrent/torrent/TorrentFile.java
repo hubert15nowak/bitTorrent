@@ -1,6 +1,6 @@
 package bitTorrent.torrent;
 
-import bitTorrent.peer.local.File;
+import bitTorrent.peer.local.MyFile;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,8 +9,15 @@ import java.util.Formatter;
 
 public class TorrentFile {
 
+    String path;
+    MyFile file;
 
-    public static String getPiecesSha(File file, int pieceSizeKiB) throws NoSuchAlgorithmException{
+    public TorrentFile(String path, MyFile file) {
+        this.path = path;
+        this.file = file;
+    }
+
+    public static String getPiecesSha(MyFile file, int pieceSizeKiB) throws NoSuchAlgorithmException{
         int pieceSize =  pieceSizeKiB * 1000;
         StringBuilder sha = new StringBuilder();
         int i = 0;
