@@ -8,7 +8,7 @@ public class MyFile {
     byte[] content;
     static Random random = new Random();
 
-    private MyFile(String name, byte[] content) {
+    public MyFile(String name, byte[] content) {
         this.name = name;
         this.content = content;
     }
