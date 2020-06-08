@@ -21,7 +21,7 @@ public class TorrentFile {
         int pieceSize =  pieceSizeKiB * 1000;
         StringBuilder sha = new StringBuilder();
         int i = 0;
-        for (; i < file.getContent().length + pieceSize; i += pieceSize) {
+        for (; i < file.getContent().length; i += pieceSize) {
             byte[] piece = Arrays.copyOfRange(file.getContent(), i, i + pieceSize);
             sha.append(SHAsum(piece));
         }
