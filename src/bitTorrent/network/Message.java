@@ -1,8 +1,8 @@
 package bitTorrent.network;
 
 public class Message {
-    String sourceAdrress;
-    String destinationAdrress;
+    String sourceAddress;
+    String destinationAddress;
     Object data;
     int port;
 }
