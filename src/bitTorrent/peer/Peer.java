@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class Peer extends NetworkClient implements NextAction {
     private int fixedBlockSizeB = 256;
-    private UUID id;
+    private UUID id = UUID.randomUUID();
     private Disk disk = Disk.randomDisk();
 
     private ArrayList<Torrent> torrents = new ArrayList<>();

@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import bitTorrent.peer.Peer;
 import bitTorrent.tracker.Tracker;
 import flow.FlowController;
 import gui.utils.Utils;
@@ -48,6 +49,10 @@ public class MainController {
         return tracker.toString().substring(19);
     }
 
+    private String peerName(Peer peer) {
+        return peer.toString().substring(16);
+    }
+
     public void startMockup(Parent root) {
         init(root, bundle);
 
@@ -61,7 +66,7 @@ public class MainController {
 
         peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         for (int i = 0; i < FlowController.getInstance().getTrackers().size(); i++) {
-            String peer = FlowController.getInstance().getPeers().get(i).toString().substring(16);
+            String peer = peerName(FlowController.getInstance().getPeers().get(i));
             peersArrayList.add(peer);
         }
         peersList.getItems().addAll(peersArrayList);
@@ -80,6 +85,9 @@ public class MainController {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
                             for (Tracker tracker : FlowController.getInstance().getTrackers()) {
                                 if (trackerName(tracker).equals(item)) {
+                                    leftText.setText("Adres trackera: "+tracker.getAddress()+"\n"+
+                                            "Adres portu: "+tracker.getPort()
+                                    );
 
                                     break;
                                 }
@@ -102,8 +110,16 @@ public class MainController {
                     setText(item);
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
-                            leftText.setText(item);
-//                            middleText.setText(FlowController.getInstance().getPeers().get(2).getDisk().getName());
+                            for (Peer peer : FlowController.getInstance().getPeers()) {
+                                if (peerName(peer).equals(item)) {
+                                    middleText.setText("Dysk: "+peer.getDisk().getName()+"\n"+
+                                                    "Adres: "+peer.getAddress()+"\n"+
+                                                    "Port: "+peer.getPort()+"\n"+
+                                                    "ID: "+peer.getId()+"\n"
+                                    );
+                                    break;
+                                }
+                            }
                         }
                     });
                 }
@@ -115,9 +131,6 @@ public class MainController {
         });
 
 
-        leftText.setText("");
-        middleText.setText("middle");
-        rightText.setText("right");
     }
 
     private void init(Parent root, ResourceBundle bundle) {
