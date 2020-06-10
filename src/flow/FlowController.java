@@ -21,7 +21,7 @@ public class FlowController {
     private FlowController() {
         network = Network.getInstance();
         for (int i = 0; i < 5; i++) {
-            Tracker tracker = new Tracker(Network.getNewAddress(), random.nextInt(1000)+30,network);
+            Tracker tracker = new Tracker(Network.getNewAddress(), 80, network);
             trackers.add(tracker);
         }
         for (int i = 0; i < 5; i++) {
@@ -29,6 +29,11 @@ public class FlowController {
             peers.add(peer);
         }
 
+        try {
+            peers.get(0).shareFile(peers.get(0).getDisk().getFiles().get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public ArrayList<Tracker> getTrackers() {
