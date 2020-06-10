@@ -70,4 +70,8 @@ public class Peer extends NetworkClient implements NextAction {
     public void setNewPWP(ArrayList<PWPClient> newPWP) {
         this.newPWP = newPWP;
     }
+
+    public Disk getDisk() {
+        return disk;
+    }
 }
