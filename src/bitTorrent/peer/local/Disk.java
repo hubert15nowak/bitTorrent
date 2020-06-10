@@ -27,6 +27,7 @@ public class Disk extends Directory{
             generate(d, maxLevel, maxDirectories, maxFiles, maxSizeKiB);
         }
         dir.setFiles(randomFiles(maxFiles, maxSizeKiB));
+        dir.files.forEach(myFile -> myFile.parent = dir);
     }
 
     private static ArrayList<MyFile> randomFiles(int maxFiles, int maxSizeKiB) {

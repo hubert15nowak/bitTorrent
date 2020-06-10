@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class Directory {
     String name;
+    Directory parent;
     ArrayList<Directory> directories = new ArrayList<>();
     ArrayList<MyFile> files = new ArrayList<>();
 
@@ -16,6 +17,7 @@ public class Directory {
     }
 
     public boolean add(Directory directory) {
+        directory.parent = this;
         return directories.add(directory);
     }
 

@@ -6,6 +6,7 @@ import java.util.Random;
 public class MyFile {
     String name;
     byte[] content;
+    Directory parent;
     static Random random = new Random();
 
     public MyFile(String name, byte[] content) {
