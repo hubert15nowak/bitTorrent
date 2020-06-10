@@ -14,6 +14,7 @@ public class MetainfoFile {
     String createdBy;
     String creationDate;
     HashMap<String, Object> info;
+    public static ArrayList<MetainfoFile> internetFiles;
 
     private MetainfoFile(String announce, String announceList, String comment, String createdBy) {
         this.announce = announce;
