@@ -69,6 +69,10 @@ public class MetainfoFile {
         }
     }
 
+    public String getAnnounce() {
+        return announce;
+    }
+
     public HashMap<String, Object> getInfo() {
         return info;
     }

@@ -1,9 +1,16 @@
 package bitTorrent.peer;
 
-import bitTorrent.network.*;
+import bitTorrent.network.Message;
+import bitTorrent.network.Network;
+import bitTorrent.network.NetworkClient;
+import bitTorrent.network.NetworkSocket;
 import bitTorrent.peer.local.Disk;
+import bitTorrent.peer.local.MyFile;
 import bitTorrent.peer.pwp.PWPClient;
 import bitTorrent.peer.torrent.Torrent;
+import bitTorrent.torrent.MetainfoFile;
+import bitTorrent.tracker.TrackerRequest;
+import flow.FlowController;
 import flow.NextAction;
 
 import java.util.ArrayList;
@@ -29,15 +36,25 @@ public class Peer extends NetworkClient implements NextAction {
         for (Torrent torrent : torrents) {
             torrent.nextStep();
         }
+
     }
 
     @Override
     protected void receiveSocket(NetworkSocket socket) {
-        PWPClient pwpClient = new PWPClient(id, socket);
+        PWPClient pwpClient = new PWPClient(id, socket, this);
         socket.setHandler(pwpClient);
         newPWP.add(pwpClient);
     }
 
+    public MetainfoFile shareFile(MyFile file) throws Exception {
+
+        MetainfoFile torrent = MetainfoFile.createTorrent(FlowController.getInstance().getTrackers().get(0).getAddress(), null, null,
+                null, file, 1);
+
+        TrackerRequest trackerRequest = new TrackerRequest(torrent.getInfo().hashCode(), id, getPort(), file.getContent().length, file.getContent().length, 0, getAddress(), null, "completed");
+        sendMessage(new Message(getAddress(), torrent.getAnnounce(), 80, trackerRequest));
+        return torrent;
+    }
 
     public int getFixedBlockSizeB() {
         return fixedBlockSizeB;

@@ -16,7 +16,7 @@ public class TrackerRequest {
     private String event;
     private HashMap<String, Object> dict = new HashMap<>();
 
-    public TrackerRequest(int infoHash, String peerId, int port, int uploaded, int downloaded, int left, String ip, Integer numWant, String event) {
+    public TrackerRequest(int infoHash, UUID peerId, int port, int uploaded, int downloaded, int left, String ip, Integer numWant, String event) {
         dict.put("infoHash", infoHash);
         dict.put("peerId", peerId);
         dict.put("port", port);

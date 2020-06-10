@@ -1,15 +1,13 @@
 package bitTorrent.peer.torrent;
 
-import bitTorrent.peer.FileManager;
+import bitTorrent.peer.local.FileManager;
 import bitTorrent.peer.Peer;
 import bitTorrent.peer.local.Directory;
-import bitTorrent.peer.local.MyFile;
 import bitTorrent.peer.pwp.PWPClient;
 import bitTorrent.torrent.MetainfoFile;
 import flow.NextAction;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.Hashtable;
 
 public class Torrent implements NextAction {
@@ -40,10 +38,9 @@ public class Torrent implements NextAction {
         torrent.piecesHash = (String) metainfoFile.getInfo().get("pieces");
         if (torrent.piecesHash.length() % 20 != 0) throw new Exception("wrong string hash");
         torrent.piecesAmount = torrent.piecesHash.length() / 20;
-        torrent.fileManager = new FileManager(root,
+        torrent.fileManager = FileManager.createNewFile(root,
                 (String) metainfoFile.getInfo().get("name"),
                 (int) metainfoFile.getInfo().get("length"));
-
         return torrent;
     }
 
