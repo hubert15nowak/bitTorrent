@@ -6,12 +6,13 @@ import bitTorrent.peer.local.Directory;
 import bitTorrent.peer.local.MyFile;
 import bitTorrent.peer.pwp.PWPClient;
 import bitTorrent.torrent.MetainfoFile;
+import flow.NextAction;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
-public class Torrent {
+public class Torrent implements NextAction {
 
     private int piecesAmount;
     private FileManager fileManager;
@@ -22,7 +23,9 @@ public class Torrent {
     private String piecesHash;
     private Hashtable<Integer, Integer> availablePieces = new Hashtable<>();
 
-    private Torrent(Peer peer) {}
+    private Torrent(Peer peer) {
+        this.peer = peer;
+    }
 
     public static Torrent createTorrent(Peer peer, MetainfoFile metainfoFile, Directory root) throws Exception {
         if (metainfoFile.getInfo().containsKey("files")) {
@@ -50,4 +53,8 @@ public class Torrent {
     }
 
 
+    @Override
+    public void nextStep() {
+
+    }
 }
