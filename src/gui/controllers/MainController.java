@@ -1,17 +1,19 @@
 package gui.controllers;
 
+import bitTorrent.tracker.Tracker;
+import flow.FlowController;
+import gui.utils.Utils;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
+
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.text.Text;
-import gui.dialogs.DialogUtils;
+import gui.utils.DialogUtils;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class MainController {
@@ -36,15 +38,29 @@ public class MainController {
     @FXML
     private MenuBar menuBar;
 
+    private MenuItem menu11, menu12;
+    private MenuItem menu211, menu212,menu213;
+    private MenuItem menu31;
+    private ArrayList<String> trackersArrayList = new ArrayList<>();
+    private ArrayList<String> peersArrayList = new ArrayList<>();
+
     public void startMockup(Parent root){
         init(root, bundle);
 
         trackersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        trackersList.getItems().addAll("tracker1", "tracker2", "tracker3", "tracker4", "tracker5", "tracker6");
 
+        for(int i =0; i<FlowController.getInstance().getTrackers().size(); i++){
+            String tracker = FlowController.getInstance().getTrackers().get(i).toString().substring(19);
+            trackersArrayList.add(tracker);
+        }
+        trackersList.getItems().addAll(trackersArrayList);
 
         peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        peersList.getItems().addAll("peer", "peer2", "peer3");
+        for(int i =0; i<FlowController.getInstance().getTrackers().size(); i++){
+            String peer = FlowController.getInstance().getPeers().get(i).toString().substring(16);
+            peersArrayList.add(peer);
+        }
+        peersList.getItems().addAll(peersArrayList);
 
         trackersList.setCellFactory(lv -> new ListCell<String>()
         {
@@ -84,11 +100,19 @@ public class MainController {
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
                             leftText.setText(item);
+//                            middleText.setText(FlowController.getInstance().getPeers().get(2).getDisk().getName());
                         }
                     });
                 }
             }
         });
+
+        menu31.setOnAction(v -> {
+            DialogUtils.about();
+        });
+
+
+
 
         leftText.setText("");
         middleText.setText("middle");
@@ -103,18 +127,18 @@ public class MainController {
         rightText = (Text) root.lookup("#rightText");
         menuBar = (MenuBar) root.lookup("#menuBar");
 
-        Menu menu1 = new Menu("Wyświetl");
-            MenuItem menu12 = new MenuItem("12");
-            MenuItem menu11 = new MenuItem("11");
-        Menu menu2 = new Menu(bundle.getString("edit"));
-            Menu menu21 = new Menu("21");
-                MenuItem menu211 = new MenuItem("211");
-                MenuItem menu212 = new MenuItem("212");
+         Menu menu1 = new Menu("Wyświetl");
+             menu12 = new MenuItem("12");
+             menu11 = new MenuItem("11");
+         Menu menu2 = new Menu(bundle.getString("edit"));
+             Menu menu21 = new Menu("21");
+                 menu211 = new MenuItem("211");
+                 menu212 = new MenuItem("212");
                 SeparatorMenuItem separator = new SeparatorMenuItem();
-                MenuItem menu213 = new MenuItem("213");
-                    menu213.setGraphic(getImage("torrent.png", 20,20));
-        Menu menu3 = new Menu("Pomoc");
-            MenuItem menu31 = new MenuItem("O aplikacji");
+                 menu213 = new MenuItem("213");
+                    menu213.setGraphic(Utils.getImage("torrent.png", 20,20));
+         Menu menu3 = new Menu(bundle.getString("help"));
+             menu31 = new MenuItem(bundle.getString("about"));
 
         menuBar.getMenus().addAll(menu1, menu2, menu3);
             menu1.getItems().addAll(menu11, menu12);
@@ -122,13 +146,5 @@ public class MainController {
                 menu21.getItems().addAll(menu211, menu212, separator, menu213);
             menu3.getItems().addAll(menu31);
 
-        menu31.setOnAction(v -> {
-            DialogUtils.about();
-        });
     }
-
-    private ImageView getImage(String name, int width, int height){
-        return new ImageView(new Image("resources/images/"+name,width,height,false,false));
-    }
-
 }
