@@ -13,8 +13,8 @@ public class FlowController {
     int interval;
 
     private Network network;
-    private ArrayList<Tracker> trackers;
-    private ArrayList<Peer> peers;
+    private ArrayList<Tracker> trackers = new ArrayList<>();
+    private ArrayList<Peer> peers = new ArrayList<>();
     private static FlowController flowController;
     private static Random random = new Random();
 

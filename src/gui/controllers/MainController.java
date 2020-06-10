@@ -39,63 +39,66 @@ public class MainController {
     private MenuBar menuBar;
 
     private MenuItem menu11, menu12;
-    private MenuItem menu211, menu212,menu213;
+    private MenuItem menu211, menu212, menu213;
     private MenuItem menu31;
     private ArrayList<String> trackersArrayList = new ArrayList<>();
     private ArrayList<String> peersArrayList = new ArrayList<>();
 
-    public void startMockup(Parent root){
+    private String trackerName(Tracker tracker) {
+        return tracker.toString().substring(19);
+    }
+
+    public void startMockup(Parent root) {
         init(root, bundle);
 
         trackersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        for(int i =0; i<FlowController.getInstance().getTrackers().size(); i++){
-            String tracker = FlowController.getInstance().getTrackers().get(i).toString().substring(19);
+        for (int i = 0; i < FlowController.getInstance().getTrackers().size(); i++) {
+            String tracker = trackerName(FlowController.getInstance().getTrackers().get(i));
             trackersArrayList.add(tracker);
         }
         trackersList.getItems().addAll(trackersArrayList);
 
         peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        for(int i =0; i<FlowController.getInstance().getTrackers().size(); i++){
+        for (int i = 0; i < FlowController.getInstance().getTrackers().size(); i++) {
             String peer = FlowController.getInstance().getPeers().get(i).toString().substring(16);
             peersArrayList.add(peer);
         }
         peersList.getItems().addAll(peersArrayList);
 
-        trackersList.setCellFactory(lv -> new ListCell<String>()
-        {
+        trackersList.setCellFactory(lv -> new ListCell<String>() {
 
             @Override
-            public void updateItem(String item, boolean empty)
-            {
+            public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setText(item);
                     setGraphic(null);
-                }
-                else {
+                } else {
                     setText(item);
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
-                            leftText.setText(item);
+                            for (Tracker tracker : FlowController.getInstance().getTrackers()) {
+                                if (trackerName(tracker).equals(item)) {
+
+                                    break;
+                                }
+                            }
                         }
                     });
                 }
             }
         });
 
-        peersList.setCellFactory(lv -> new ListCell<String>()
-        {
+        peersList.setCellFactory(lv -> new ListCell<String>() {
 
             @Override
-            public void updateItem(String item, boolean empty)
-            {
+            public void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setText(item);
                     setGraphic(null);
-                }
-                else {
+                } else {
                     setText(item);
                     setOnMouseClicked(mouseClickedEvent -> {
                         if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
@@ -112,14 +115,12 @@ public class MainController {
         });
 
 
-
-
         leftText.setText("");
         middleText.setText("middle");
         rightText.setText("right");
     }
 
-    private void init(Parent root, ResourceBundle bundle){
+    private void init(Parent root, ResourceBundle bundle) {
         trackersList = (ListView<String>) root.lookup("#trackersList");
         peersList = (ListView<String>) root.lookup("#peersList");
         leftText = (Text) root.lookup("#leftText");
@@ -127,24 +128,24 @@ public class MainController {
         rightText = (Text) root.lookup("#rightText");
         menuBar = (MenuBar) root.lookup("#menuBar");
 
-         Menu menu1 = new Menu("Wyświetl");
-             menu12 = new MenuItem("12");
-             menu11 = new MenuItem("11");
-         Menu menu2 = new Menu(bundle.getString("edit"));
-             Menu menu21 = new Menu("21");
-                 menu211 = new MenuItem("211");
-                 menu212 = new MenuItem("212");
-                SeparatorMenuItem separator = new SeparatorMenuItem();
-                 menu213 = new MenuItem("213");
-                    menu213.setGraphic(Utils.getImage("torrent.png", 20,20));
-         Menu menu3 = new Menu(bundle.getString("help"));
-             menu31 = new MenuItem(bundle.getString("about"));
+        Menu menu1 = new Menu("Wyświetl");
+        menu12 = new MenuItem("12");
+        menu11 = new MenuItem("11");
+        Menu menu2 = new Menu(bundle.getString("edit"));
+        Menu menu21 = new Menu("21");
+        menu211 = new MenuItem("211");
+        menu212 = new MenuItem("212");
+        SeparatorMenuItem separator = new SeparatorMenuItem();
+        menu213 = new MenuItem("213");
+        menu213.setGraphic(Utils.getImage("torrent.png", 20, 20));
+        Menu menu3 = new Menu(bundle.getString("help"));
+        menu31 = new MenuItem(bundle.getString("about"));
 
         menuBar.getMenus().addAll(menu1, menu2, menu3);
-            menu1.getItems().addAll(menu11, menu12);
-            menu2.getItems().addAll(menu21);
-                menu21.getItems().addAll(menu211, menu212, separator, menu213);
-            menu3.getItems().addAll(menu31);
+        menu1.getItems().addAll(menu11, menu12);
+        menu2.getItems().addAll(menu21);
+        menu21.getItems().addAll(menu211, menu212, separator, menu213);
+        menu3.getItems().addAll(menu31);
 
     }
 }
