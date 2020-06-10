@@ -7,4 +7,12 @@ public class PeerInfo {
     String ip;
     int port;
 
+    public PeerInfo() {
+    }
+
+    public PeerInfo(UUID peerId, String ip, int port) {
+        this.peerId = peerId;
+        this.ip = ip;
+        this.port = port;
+    }
 }
