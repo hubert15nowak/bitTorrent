@@ -1,11 +1,12 @@
 package bitTorrent.tracker;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 public class TrackerRequest {
 
     private int infoHash;
-    private String peerId;
+    private UUID peerId;
     private int port;
     private int uploaded;
     private int downloaded;
@@ -30,5 +31,44 @@ public class TrackerRequest {
             dict.put("event", event);
     }
 
-    
+
+    public int getInfoHash() {
+        return infoHash;
+    }
+
+    public UUID getPeerId() {
+        return peerId;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public int getUploaded() {
+        return uploaded;
+    }
+
+    public int getDownloaded() {
+        return downloaded;
+    }
+
+    public int getLeft() {
+        return left;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public int getNumWant() {
+        return numWant;
+    }
+
+    public String getEvent() {
+        return event;
+    }
+
+    public HashMap<String, Object> getDict() {
+        return dict;
+    }
 }
