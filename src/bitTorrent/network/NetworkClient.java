@@ -10,7 +10,8 @@ public abstract class NetworkClient implements NetworkHandler, NextAction {
     int port;
     Network network;
     ArrayList<Message> newMessages;
-    ArrayList<Message> currentMessages;
+    protected ArrayList<Message> currentMessages;
+    protected ArrayList<Message> allMessages;
     ArrayList<NetworkSocket> sockets = new ArrayList<>();
 
     public NetworkClient(String address, int port, Network network) {
@@ -18,7 +19,9 @@ public abstract class NetworkClient implements NetworkHandler, NextAction {
         this.port = port;
         this.network = network;
         newMessages = new ArrayList<>();
+        allMessages = new ArrayList<>();
         currentMessages = new ArrayList<>();
+
     }
 
     @Override
@@ -34,8 +37,8 @@ public abstract class NetworkClient implements NetworkHandler, NextAction {
         newMessages.add(message);
     }
 
-    private void computeMessages() {
-        for (Message message : currentMessages) {
+    private void computeSocketMessages() {
+        for (Message message : allMessages) {
             try {
             if (message.port != port) throw new Exception("invalid port");
             if (message instanceof SocketMessage) {
@@ -50,6 +53,8 @@ public abstract class NetworkClient implements NetworkHandler, NextAction {
                     }
                 }
 
+            } else {
+                currentMessages.add(message);
             } }catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -58,8 +63,9 @@ public abstract class NetworkClient implements NetworkHandler, NextAction {
 
     @Override
     public void nextStep() {
-        computeMessages();
-        currentMessages = newMessages;
+        computeSocketMessages();
+        currentMessages.clear();
+        allMessages = newMessages;
         newMessages = new ArrayList<>();
         System.out.println("network client next step");
     }
