@@ -2,7 +2,7 @@ package bitTorrent.network;
 
 public interface NetworkHandler {
 
-    void sendMessage(Message message);
+    void sendMessage(Message message) throws Exception;
 
-    Message receiveMessage();
+    void receiveMessage(Message message) throws Exception;
 }
