@@ -12,4 +12,12 @@ public class Message {
         this.data = data;
         this.port = port;
     }
+
+    public Object getData() {
+        return data;
+    }
+
+    public String getSourceAddress() {
+        return sourceAddress;
+    }
 }
