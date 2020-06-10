@@ -1,6 +1,7 @@
 package gui.controllers;
 
 import bitTorrent.peer.Peer;
+import bitTorrent.peer.torrent.Torrent;
 import bitTorrent.tracker.Tracker;
 import flow.FlowController;
 import gui.utils.Utils;
@@ -28,6 +29,12 @@ public class MainController {
     private ListView<String> peersList;
 
     @FXML
+    private ListView<String> leftTextList;
+
+    @FXML
+    private ListView<String> middleTextList;
+
+    @FXML
     private Text leftText;
 
     @FXML
@@ -44,6 +51,9 @@ public class MainController {
     private MenuItem menu31;
     private ArrayList<String> trackersArrayList = new ArrayList<>();
     private ArrayList<String> peersArrayList = new ArrayList<>();
+    private ArrayList<String> leftTextArrayList = new ArrayList<>();
+    private ArrayList<String> middleTextArrayList = new ArrayList<>();
+
 
     private String trackerName(Tracker tracker) {
         return tracker.toString().substring(19);
@@ -56,7 +66,10 @@ public class MainController {
     public void startMockup(Parent root) {
         init(root, bundle);
 
+        leftTextList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         trackersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        leftTextList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         for (int i = 0; i < FlowController.getInstance().getTrackers().size(); i++) {
             String tracker = trackerName(FlowController.getInstance().getTrackers().get(i));
@@ -64,7 +77,7 @@ public class MainController {
         }
         trackersList.getItems().addAll(trackersArrayList);
 
-        peersList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         for (int i = 0; i < FlowController.getInstance().getTrackers().size(); i++) {
             String peer = peerName(FlowController.getInstance().getPeers().get(i));
             peersArrayList.add(peer);
@@ -86,8 +99,13 @@ public class MainController {
                             for (Tracker tracker : FlowController.getInstance().getTrackers()) {
                                 if (trackerName(tracker).equals(item)) {
                                     leftText.setText("Adres trackera: "+tracker.getAddress()+"\n"+
-                                            "Adres portu: "+tracker.getPort()
-                                    );
+                                            "Adres portu: "+tracker.getPort());
+
+                                    for (int i = 0; i < tracker.getTorrents().size(); i++) {
+                                        String torrent = tracker.getTorrents().get(i).toString();
+                                        leftTextArrayList.add(torrent);
+                                    }
+                                    leftTextList.getItems().addAll(leftTextArrayList);
 
                                     break;
                                 }
@@ -131,11 +149,75 @@ public class MainController {
         });
 
 
+        leftTextList.setCellFactory(lv -> new ListCell<String>() {
+
+            @Override
+            public void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(item);
+                    setGraphic(null);
+                } else {
+                    setText(item);
+                    setOnMouseClicked(mouseClickedEvent -> {
+                        if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
+                            for (Tracker tracker : FlowController.getInstance().getTrackers()) {
+                                if (trackerName(tracker).equals(item)) {
+                                    leftText.setText("Adres trackera: "+tracker.getAddress()+"\n"+
+                                            "Adres portu: "+tracker.getPort()
+                                    );
+
+
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+
+        middleTextList.getItems().addAll("middle","text","list");
+
+//        middleTextList.setCellFactory(lv -> new ListCell<String>() {
+//
+//            @Override
+//            public void updateItem(String item, boolean empty) {
+//                super.updateItem(item, empty);
+//                if (empty) {
+//                    setText(item);
+//                    setGraphic(null);
+//                } else {
+//                    setText(item);
+//                    setOnMouseClicked(mouseClickedEvent -> {
+//                        if (mouseClickedEvent.getButton().equals(MouseButton.PRIMARY) && mouseClickedEvent.getClickCount() == 1) {
+//
+//                            for (Tracker tracker : FlowController.getInstance().getTrackers()) {
+//                                for (String torrent : leftTextArrayList){
+//                                    if(torrent.equals(item)){
+//
+//                                        tracker.getTorrents().get(2).getInfoHash();
+//                                    }
+//                                }
+//
+//                                    break;
+//                                }
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//        });
+
+
     }
 
     private void init(Parent root, ResourceBundle bundle) {
         trackersList = (ListView<String>) root.lookup("#trackersList");
         peersList = (ListView<String>) root.lookup("#peersList");
+        leftTextList = (ListView<String>) root.lookup("#leftTextList");
+        middleTextList = (ListView<String>) root.lookup("#middleTextList");
         leftText = (Text) root.lookup("#leftText");
         middleText = (Text) root.lookup("#middleText");
         rightText = (Text) root.lookup("#rightText");
@@ -150,7 +232,7 @@ public class MainController {
         menu212 = new MenuItem("212");
         SeparatorMenuItem separator = new SeparatorMenuItem();
         menu213 = new MenuItem("213");
-        menu213.setGraphic(Utils.getImage("torrent.png", 20, 20));
+        //menu213.setGraphic(Utils.getImage("torrent.png", 20, 20));
         Menu menu3 = new Menu(bundle.getString("help"));
         menu31 = new MenuItem(bundle.getString("about"));
 
